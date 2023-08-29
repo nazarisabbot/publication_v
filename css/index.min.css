@@ -642,7 +642,7 @@ main {
 }
 @media (max-width: 520px) {
   .burger__body {
-    width: 120%;
+    width: 100%;
     background: #FFF;
     position: relative;
     top: -255px;
