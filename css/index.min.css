@@ -642,6 +642,7 @@ main {
 }
 @media (max-width: 520px) {
   .burger__body {
+    overflow-x: hidden;
     width: 100%;
     background: #FFF;
     position: relative;
