@@ -9,24 +9,24 @@
 /* Screen dimensions */
 
 @font-face {
-  font-family: Roboto;
+  font-family: "Roboto-300";
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/Roboto-300.woff2") format("woff2"), url("../fonts/Roboto-300.woff") format("woff");
+  src: url("../fonts/Roboto-300.woff") format("woff");
 }
 
 @font-face {
-  font-family: Roboto;
+  font-family: "Roboto-400";
   font-weight: 400;
   font-display: swap;
-  src: url("../fonts/Roboto-400.woff2") format("woff2"), url("../fonts/Roboto-400.woff") format("woff");
+  src: url("../fonts/Roboto-400.woff") format("woff");
 }
 
 @font-face {
-  font-family: Roboto;
+  font-family: "Roboto-700";
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/Roboto-700.woff2") format("woff2"), url("../fonts/Roboto-700.woff") format("woff");
+  src: url("../fonts/Roboto-700.woff") format("woff");
 }
 
 /*! normalize-scss | MIT/GPLv2 License | bit.ly/normalize-scss */
@@ -1280,6 +1280,7 @@ main {
 }
 
 .just-validate-error-label {
+  color: #FF6B04 !important;
   font-size: 0.5rem;
   margin-left: 25px;
   margin-bottom: 25px;

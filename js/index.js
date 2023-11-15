@@ -1619,6 +1619,10 @@ const validate = (form, question) => {
     errorMessage: 'Введите корректный адрес электронной почты'
   }]);
   validateForm.addField(imei, [{
+    rule: 'customRegexp',
+    value: /^\d+$/,
+    errorMessage: 'Emei должен состоять только из цифр'
+  }, {
     rule: 'required',
     errorMessage: 'Заполните пожалуйста данное поле'
   }, {
