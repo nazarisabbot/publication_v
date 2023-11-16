@@ -1605,7 +1605,7 @@ class JustValidate {
 
 ;// CONCATENATED MODULE: ./src/js/validate.js
 
-const validate = (form, question) => {
+const validate = (form, question, lang) => {
   /* Form validate */
   const validateForm = new JustValidate(form);
   const email = form.email;
@@ -1613,30 +1613,30 @@ const validate = (form, question) => {
   const checkold = form.checkold;
   validateForm.addField(email, [{
     rule: 'required',
-    errorMessage: 'Заполните пожалуйста данное поле'
+    errorMessage: lang === 'ru' ? 'Заполните, пожалуйста, данное поле' : 'Осы бапты толтырыңыз'
   }, {
     rule: 'email',
-    errorMessage: 'Введите корректный адрес электронной почты'
+    errorMessage: lang === 'ru' ? 'Введите корректный адрес электронной почты' : 'Өтінеміз қолданыстағы электронды пошта адресін енгізіңіз'
   }]);
   validateForm.addField(imei, [{
     rule: 'customRegexp',
     value: /^\d+$/,
-    errorMessage: 'Emei должен состоять только из цифр'
+    errorMessage: lang === 'ru' ? 'IMEI должен состоять только из цифр' : 'IMEI тек сандардан тұруы керек'
   }, {
     rule: 'required',
-    errorMessage: 'Заполните пожалуйста данное поле'
+    errorMessage: lang === 'ru' ? 'Заполните, пожалуйста, данное поле' : 'Осы бапты толтырыңыз'
   }, {
     rule: 'minLength',
-    value: 11,
-    errorMessage: 'Emei должен состоять как минимум из 11 цифр'
+    value: 15,
+    errorMessage: lang === 'ru' ? 'IMEI должен состоять минимум из 15 цифр' : 'IMEI нөмірі 15 саннан тұруы керек'
   }, {
     rule: 'maxLength',
-    value: 11,
-    errorMessage: 'Emei должен состоять максимум из 11 цифр'
+    value: 15,
+    errorMessage: lang === 'ru' ? 'IMEI должен состоять максимум из 15 цифр' : 'IMEI ең көбі 15 саннан тұруы керек'
   }]);
   validateForm.addField(checkold, [{
     rule: 'required',
-    errorMessage: 'Вы должны подтвердить согласие с правилами акции'
+    errorMessage: lang === 'ru' ? 'Вы должны подтвердить согласие с правилами акции' : 'Науқан ережелерімен келісуіңіз керек'
   }]);
   /* end */
 
@@ -1648,26 +1648,26 @@ const validate = (form, question) => {
   const checkoldQuestion = question.checkoldquestion;
   validateQuestion.addField(name, [{
     rule: 'required',
-    errorMessage: 'Заполните пожалуйста данное поле'
+    errorMessage: lang === 'ru' ? 'Заполните, пожалуйста, данное поле' : 'Осы бапты толтырыңыз'
   }]);
   validateQuestion.addField(questionEmail, [{
     rule: 'required',
-    errorMessage: 'Заполните пожалуйста данное поле'
+    errorMessage: lang === 'ru' ? 'Заполните, пожалуйста, данное поле' : 'Осы бапты толтырыңыз'
   }, {
     rule: 'email',
-    errorMessage: 'Введите корректный адрес электронной почты'
+    errorMessage: lang === 'ru' ? 'Введите корректный адрес электронной почты' : 'Өтінеміз қолданыстағы электронды пошта адресін енгізіңіз'
   }]);
   validateQuestion.addField(message, [{
     rule: 'required',
-    errorMessage: 'Заполните пожалуйста данное поле'
+    errorMessage: lang === 'ru' ? 'Заполните, пожалуйста, данное поле' : 'Осы бапты толтырыңыз'
   }, {
     rule: 'maxLength',
     value: 100,
-    errorMessage: 'Сообщение не больше 100 символов'
+    errorMessage: lang === 'ru' ? 'Сообщение не должно содержать больше 100 символов' : 'Хабарлама 100 таңбадан аспауы керек'
   }]);
   validateQuestion.addField(checkoldQuestion, [{
     rule: 'required',
-    errorMessage: 'Вы должны подтвердить согласие с правилами акции'
+    errorMessage: lang === 'ru' ? 'Вы должны подтвердить согласие с правилами акции' : 'Науқан ережелерімен келісуіңіз керек'
   }]);
   /* end */
 };
@@ -1677,6 +1677,7 @@ const validate = (form, question) => {
 
 
 
+const lang = document.querySelector('html').getAttribute('lang');
 const js_form = document.querySelector('#form');
 const question = document.querySelector('#question');
 const headerPoint = document.querySelectorAll('.header__point');
@@ -1684,7 +1685,7 @@ const burgerMenu = document.querySelector('.header__burger');
 const list = document.querySelector('.header__list');
 js_softScroll(headerPoint);
 js_burger(burgerMenu, list);
-js_validate(js_form, question);
+js_validate(js_form, question, lang);
 js_form.addEventListener('submit', e => {
   e.preventDefault();
 });
