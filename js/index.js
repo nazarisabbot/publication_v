@@ -1628,11 +1628,11 @@ const validate = (form, question, lang) => {
   }, {
     rule: 'minLength',
     value: 15,
-    errorMessage: lang === 'ru' ? 'IMEI должен состоять минимум из 15 цифр' : 'IMEI нөмірі 15 саннан тұруы керек'
+    errorMessage: lang === 'ru' ? 'IMEI должен состоять из 15 цифр' : 'IMEI нөмірі 15 саннан тұруы керек'
   }, {
     rule: 'maxLength',
     value: 15,
-    errorMessage: lang === 'ru' ? 'IMEI должен состоять максимум из 15 цифр' : 'IMEI ең көбі 15 саннан тұруы керек'
+    errorMessage: lang === 'ru' ? 'IMEI должен состоять из 15 цифр' : 'IMEI нөмірі 15 саннан тұруы керек'
   }]);
   validateForm.addField(checkold, [{
     rule: 'required',
@@ -1663,7 +1663,7 @@ const validate = (form, question, lang) => {
   }, {
     rule: 'maxLength',
     value: 100,
-    errorMessage: lang === 'ru' ? 'Сообщение не должно содержать больше 100 символов' : 'Хабарлама 100 таңбадан аспауы керек'
+    errorMessage: lang === 'ru' ? 'Сообщение не должно превышать 100 символов' : 'Хабарлама мәтіні 100 таңбадан аспауы керек'
   }]);
   validateQuestion.addField(checkoldQuestion, [{
     rule: 'required',
