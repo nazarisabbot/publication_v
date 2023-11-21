@@ -1704,7 +1704,7 @@ const callModalWindow = (lang, res, flag) => {
   divCross.appendChild(span1);
   divCross.appendChild(span2);
   const img = document.createElement('img');
-  const path = res === 'ok' ? './img/true.svg' : './img/false.svg';
+  const path = res === 'ok' ? './img/true.svg' : './img/false.png';
   img.setAttribute('src', path);
   divBody.appendChild(img);
   const p = document.createElement('p');
