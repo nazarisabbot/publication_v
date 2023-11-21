@@ -2,20 +2,6 @@
 /******/ 	"use strict";
 var __webpack_exports__ = {};
 
-;// CONCATENATED MODULE: ./src/js/softScroll.js
-const softScroll = elements => {
-  const point = elements;
-  point.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      document.querySelector(href).scrollIntoView({
-        behavior: 'smooth'
-      });
-    });
-  });
-};
-/* harmony default export */ var js_softScroll = (softScroll);
 ;// CONCATENATED MODULE: ./src/js/burger.js
 const burger = (btn, menu) => {
   btn.addEventListener('click', e => {
@@ -1669,11 +1655,114 @@ const validate = (form, question, lang) => {
     rule: 'required',
     errorMessage: lang === 'ru' ? 'Вы должны подтвердить согласие с правилами акции' : 'Науқан ережелерімен келісуіңіз керек'
   }]);
+  return {
+    validateForm,
+    validateQuestion
+  };
   /* end */
 };
 
 /* harmony default export */ var js_validate = (validate);
+;// CONCATENATED MODULE: ./src/js/request.js
+const request = async (api, body, form) => {
+  try {
+    const response = await fetch(`http://xiaomipromo.kz:81/api/${api}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    if (response.ok) {
+      console.log('Данные успешно отправлены');
+      form.reset();
+      return 'ok';
+    } else {
+      console.error('Ошибка при отправке данных:', response.statusText);
+      return;
+    }
+  } catch (error) {
+    console.error('Произошла ошибка:', error);
+    return '!ok';
+  }
+};
+/* harmony default export */ var js_request = (request);
+;// CONCATENATED MODULE: ./src/js/callModalWindow.js
+const callModalWindow = (lang, res, flag) => {
+  const body = document.body;
+  const divModal = document.createElement('div');
+  divModal.classList.add('modal');
+  const container = document.createElement('div');
+  container.classList.add('container');
+  const divBody = document.createElement('div');
+  divBody.classList.add('modal__body');
+  const divCross = document.createElement('div');
+  divCross.classList.add('modal__cross');
+  divBody.appendChild(divCross);
+  const span1 = document.createElement('span');
+  const span2 = document.createElement('span');
+  divCross.appendChild(span1);
+  divCross.appendChild(span2);
+  const img = document.createElement('img');
+  const path = res === 'ok' ? './img/true.svg' : './img/false.svg';
+  img.setAttribute('src', path);
+  divBody.appendChild(img);
+  const p = document.createElement('p');
+  let message = '';
+  switch (true) {
+    case flag === 'question' && lang === 'ru' && res === 'ok':
+      message = 'Спасибо! Ваше сообщение было отправлено! Мы скоро свяжемся с вами.';
+      break;
+    case flag === 'question' && lang === 'ru' && res === '!ok':
+      message = 'Ошибка сервера. Повторите попытку позднее.';
+      break;
+    case flag === 'question' && lang === 'kk' && res === 'ok':
+      message = 'Рахмет! Сіздің хабарламаңыз жіберілді! Біз сізге жақын арада жауап береміз.';
+      break;
+    case flag === 'question' && lang === 'kk' && res === '!ok':
+      message = 'Сервер қателігі. Әрекетті кейінірек қайталаңыз.';
+      break;
+    case flag === 'form' && lang === 'ru' && res === 'ok':
+      message = 'Промокод отправлен на вашу почту, проверьте папку СПАМ.';
+      break;
+    case flag === 'form' && lang === 'ru' && res === '!ok':
+      message = 'Ваш IMEI не найден в базе (не вносился, либо уже получил промокод).';
+      break;
+    case flag === 'form' && lang === 'kk' && res === 'ok':
+      message = 'Сіздің электрондық поштаңызға промокод жіберілді, СПАМ папкасын тексеріңіз.';
+      break;
+    case flag === 'form' && lang === 'kk' && res === '!ok':
+      message = 'Сіздің IMEI дерекқорда табылмады (промокод енгізілмеген немесе әлдеқашан алынған).';
+      break;
+    default:
+      message = 'Неизвестная комбинация параметров.';
+  }
+  p.textContent = message;
+  divBody.appendChild(p);
+  divModal.appendChild(container);
+  container.appendChild(divBody);
+  body.appendChild(divModal);
+
+  // Добавляем слушатель событий для закрытия модального окна
+  divCross.addEventListener('click', hideModal);
+  window.addEventListener('click', outsideClick);
+
+  // Функция для скрытия модального окна
+  function hideModal() {
+    divModal.classList.add('noactive'); // Замените 'hidden' на ваш класс для скрытия модального окна
+  }
+
+  // Функция для проверки клика вне модального окна
+  function outsideClick(e) {
+    if (!divModal.contains(e.target)) {
+      hideModal();
+    }
+  }
+};
+/* harmony default export */ var js_callModalWindow = (callModalWindow);
 ;// CONCATENATED MODULE: ./src/js/index.js
+
+
 
 
 
@@ -1683,11 +1772,41 @@ const question = document.querySelector('#question');
 const headerPoint = document.querySelectorAll('.header__point');
 const burgerMenu = document.querySelector('.header__burger');
 const list = document.querySelector('.header__list');
-js_softScroll(headerPoint);
+
+// softScroll(headerPoint);
 js_burger(burgerMenu, list);
-js_validate(js_form, question, lang);
-js_form.addEventListener('submit', e => {
+// validate(form, question, lang);
+const {
+  validateForm,
+  validateQuestion
+} = js_validate(js_form, question, lang);
+js_form.addEventListener('submit', async e => {
   e.preventDefault();
+  const formDataGetPromo = new FormData(e.target);
+  const toSentDataObjForPromo = {
+    imei: Number(formDataGetPromo.get('imei')),
+    email: formDataGetPromo.get('email')
+  };
+  const isFormValid = validateForm;
+  if (isFormValid.isValid) {
+    js_request('v1/code/receive', toSentDataObjForPromo, js_form).then(res => {
+      js_callModalWindow(lang, res, 'form');
+    });
+  }
+});
+question.addEventListener('submit', async e => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const toSentDataObj = {
+    email: formData.get('emailquestion'),
+    message: formData.get('message')
+  };
+  const isFormValidQuestion = validateQuestion;
+  if (isFormValidQuestion.isValid) {
+    js_request('v1/feedback', toSentDataObj, question).then(res => {
+      js_callModalWindow(lang, res, 'question');
+    });
+  }
 });
 /******/ })()
 ;
