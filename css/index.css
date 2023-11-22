@@ -639,7 +639,7 @@ main {
 
 .modal {
   position: fixed;
-  top: 50%;
+  top: 5%;
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
@@ -1535,6 +1535,10 @@ main {
 @media (max-width: 1024px) {
   .container {
     max-width: 1024px;
+  }
+
+  .modal {
+    width: 80%;
   }
 }
 
