@@ -1666,7 +1666,7 @@ const validate = (form, question, lang) => {
 ;// CONCATENATED MODULE: ./src/js/request.js
 const request = async (api, body, form) => {
   try {
-    const response = await fetch(`http://xiaomipromo.kz:81/api/${api}`, {
+    const response = await fetch(`https://xiaomipromo.kz/api/${api}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
