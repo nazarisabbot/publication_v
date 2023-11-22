@@ -1399,7 +1399,7 @@ main {
   position: absolute;
   bottom: -2px;
   left: 0;
-  right: 100%;
+  right: 0;
   height: 2px;
   background-color: #FFF;
   -webkit-transition: right 0.3s ease-out;
@@ -1408,10 +1408,6 @@ main {
 
 .footer__item:first-child {
   padding-bottom: 15px;
-}
-
-.footer__link:hover::before {
-  right: 0;
 }
 
 @media (max-width: 1440px) {

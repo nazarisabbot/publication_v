@@ -1735,7 +1735,7 @@ const callModalWindow = (lang, res, flag) => {
       message = 'Сіздің IMEI дерекқорда табылмады (промокод енгізілмеген немесе әлдеқашан алынған).';
       break;
     default:
-      message = 'Неизвестная комбинация параметров.';
+      message = lang === 'ru' ? 'Ваш IMEI не найден в базе (не вносился, либо уже получил промокод).' : 'Сіздің IMEI дерекқорда табылмады (промокод енгізілмеген немесе әлдеқашан алынған).';
   }
   p.textContent = message;
   divBody.appendChild(p);
@@ -1790,6 +1790,7 @@ js_form.addEventListener('submit', async e => {
   const isFormValid = validateForm;
   if (isFormValid.isValid) {
     js_request('v1/code/receive', toSentDataObjForPromo, js_form).then(res => {
+      console.log(res);
       js_callModalWindow(lang, res, 'form');
     });
   }
