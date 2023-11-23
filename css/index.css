@@ -1410,6 +1410,10 @@ main {
   padding-bottom: 15px;
 }
 
+.footer__paragraph span {
+  word-break: break-all;
+}
+
 @media (max-width: 1440px) {
   html {
     font-size: calc(25px + 15 * (100vw - 320px) / 1120);
